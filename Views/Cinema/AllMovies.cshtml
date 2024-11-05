@@ -1,0 +1,45 @@
+﻿
+<div class="row">
+    @foreach (var item in Model)
+    {
+
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4> @item.Name </h4>
+                </div>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <img class="d-block w-100" src="~/images/movies/@item.ImgUrl" alt="">
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-block">
+                            <br />
+                            <p>Price : <span class=" btn btn-secondary "> @item.Price</span></p>
+                            <p>Cinema : @item.Cinema.Name</p>
+
+                            <p>Start Date : @item.StartDate.ToString()</p>
+                            <p>End Date : @item.EndDate.ToString()</p>
+                            <p>Category : @item.Category.Name</p>
+
+
+                            <p class="btn btn-primary btn-sm float-right">@item.MovieStatus</p>
+                            <br />
+                            @* <a href="/Home/Details?@item.Id">  <button type="button" class="btn btn-outline-secondary btn">More Details</button></a> *@
+                            <a href="/Home/Details?id=@item.Id" class="btn btn-outline-secondary">More Details</a>
+                            <button type="button" class="btn btn-success btn">Book Ticket</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+
+
+
+    }
+
+</div>
+
+

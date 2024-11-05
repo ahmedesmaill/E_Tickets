@@ -1,0 +1,26 @@
+﻿@model Cinema
+
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h2><a href="/Cinema/Index"><i class="bi bi-arrow-left"></i></a> Add New Cinema</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <form action="/Cinema/Create" method="post">
+            <div class="mb-3">
+                <label for="exampleCinemaName" class="form-label">Cinema Name</label>
+                <input class="form-control" asp-for="Name">
+                <span class="text-warning" asp-validation-for="Name"></span>
+
+            <label for="exampleCinemaDescription" class="form-label">Cinema Description</label>
+            <input class="form-control" asp-for="Description">
+            <span class="text-warning" asp-validation-for="Description"></span>
+
+            <label for="exampleCinemaAddress" class="form-label">Cinema Address</label>
+            <input class="form-control" asp-for="Address">
+            <span class="text-warning" asp-validation-for="Address"></span>
+        </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>

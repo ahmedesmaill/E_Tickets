@@ -1,0 +1,23 @@
+﻿@model E_Tickets.ViewModel.ProfileVM
+
+<div class="container mt-5">
+    <h2 class="text-primary">Your Profile</h2>
+    <hr />
+    <div class="card shadow-sm p-4">
+        <div class="mb-3">
+            <label class="form-label"><strong>Name:</strong></label>
+            <p>@Model.Name</p>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><strong>Email:</strong></label>
+            <p>@Model.Email</p>
+        </div>
+        
+        <!-- Add more fields as necessary -->
+        
+        <div class="mt-3">
+            <a href="/Account/EditProfile" class="btn btn-primary">Edit Profile</a>
+            <a href="@Url.Action("Logout", "Account")" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>

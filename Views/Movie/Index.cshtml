@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Movie>
+@{
+    int currentPage = ViewBag.CurrentPage;
+    int totalPages = ViewBag.TotalPages;
+}
+@section Scripts{
+    <partial name="_NotificationScriptsPartial.cshtml"></partial>
+}
+<div class="row">
+    <div class="col-9 mb-3">
+        <h2>All Movie</h2>
+    </div>
+    <div class="col-3">
+        <a href="/Movie/Create" type="button" class="btn btn-danger">
+            <i class="bi bi-plus-circle"></i> Create New Movie
+        </a>
+    </div>
+</div>
+
+<form action="/Movie/Index">
+    <div class="row d-flex mb-3">
+        <div class="col-4">
+            <input type="text" class="form-control" name="query" placeholder="Search..." >
+        </div>
+        <div class="col-2">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+
+                <th scope="col">Movie Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">StartDate</th>
+                <th scope="col">Category Name</th>
+                <th scope="col">Cinema Name</th>
+
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="table-light">
+                    <th scope="row">@item.Id</th>
+                    <td>
+                        <img class="" width="50px" src="~/images/movies/@item.ImgUrl" alt="">
+                    </td>
+
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.StartDate</td>
+                    <td>@item.Category.Name</td>
+                    <td>@item.Cinema.Name</td>
+
+                    <td>
+                        <a href="/Movie/Edit?movieId=@item.Id" type="button" class="btn btn-dark">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#deleteModal" data-movieid="@item.Id">
+                            <i class="bi bi-trash3"></i> Delete
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example" class="mt-5">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="?pageNumber=@(currentPage - 1)">Previous</a>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                <a class="page-link" href="?pageNumber=@(currentPage + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+   
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this movie?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post" action="/Movie/Delete">
+                    <input type="hidden" name="movieId" id="movieIdInput" value="" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+</div>
+
+<script>
+    var deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var movieId = button.getAttribute('data-movieid');
+        var input = document.getElementById('movieIdInput');
+        input.value = movieId;
+    });
+</script>

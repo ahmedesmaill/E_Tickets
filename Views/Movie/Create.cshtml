@@ -1,0 +1,87 @@
+﻿@model Movie
+
+
+@{
+    var categories = (IEnumerable<SelectListItem>)ViewData["categories"];
+    var cinemas = (IEnumerable<SelectListItem>)ViewData["cinemas"];
+}
+
+    <div class="row">
+        <div class="col-12 mb-3">
+            <h2><a href="/Movie/Index"><i class="bi bi-arrow-left"></i></a> Create New Movie</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <form action="/Movie/Create" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="exampleMovieName" class="form-label">Movie Name</label>
+                <input type="text" class="form-control" id="exampleMovieName" name="Name" value="@Model.Name">
+            </div>
+            <div class="mb-3">
+                <label for="exampleMovieDescription" class="form-label">Movie Description</label>
+                <input type="text" class="form-control" id="exampleMovieDescription" name="Description" value="@Model.Description">
+            </div>
+            <div class="mb-3">
+                <label for="exampleMoviePrice" class="form-label">Movie Price</label>
+                <input type="number" class="form-control" id="exampleMoviePrice" name="Price" value="@Model.Price">
+            </div>
+            <div class="mb-3">
+                <label for="exampleMovieImgUrl" class="form-label">Movie Photo</label>
+                <input type="file" class="form-control" id="exampleMovieImgUrl" name="ImgUrl" accept="image/*" onchange="previewImage(event)" value="@Model.ImgUrl">
+            </div>
+            <div class="mb-3">
+                <!-- Image preview container -->
+                <img id="imagePreview" src="~/temp/@Model.ImgUrl" alt="Image Preview" style="display:none; width: 200px; height: auto;" />
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleMovieStartDate" class="form-label">StartDate</label>
+                <input type="datetime-local" class="form-control" id="exampleMovieStartDate" name="StartDate" value="@Model.StartDate">
+            </div>
+
+            <div class="mb-3">
+                <label for="exampleMovieEndDate" class="form-label">EndDate</label>
+                <input type="datetime-local" class="form-control" id="exampleMovieEndDate" name="EndDate" value="@Model.EndDate">
+            </div>
+            <div class="mb-3">
+                <label for="exampleMovieCategoryId" class="form-label"> Category Name</label>
+               
+
+                <select class="form-select" asp-for="CategoryId" asp-items="categories"></select>
+
+            </div>
+            <div class="mb-3">
+                <label for="exampleMovieCategoryId" class="form-label"> Cinema </label>
+
+
+                 <select class="form-select" asp-for="CinemaId" asp-items="cinemas"></select>
+
+
+
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+<script>
+    function previewImage(event) {
+        const reader = new FileReader();
+        const imagePreview = document.getElementById('imagePreview');
+
+        reader.onload = function(){
+            imagePreview.src = reader.result;
+            imagePreview.style.display = 'block'; // Show the image preview
+        }
+
+        if(event.target.files[0]) {
+            reader.readAsDataURL(event.target.files[0]);
+        } else {
+            imagePreview.style.display = 'none'; // Hide the preview if no file is selected
+        }
+    }
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

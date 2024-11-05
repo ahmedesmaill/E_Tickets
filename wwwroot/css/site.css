@@ -1,0 +1,98 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7f7f9;
+    color: #333;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+.text-primary {
+    color: #007bff;
+}
+
+.movie-card {
+    animation: fadeIn 0.5s ease-in-out;
+    transition: transform 0.3s ease;
+}
+
+    .movie-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #007bff;
+}
+
+.status.badge-primary {
+    background-color: #007bff;
+}
+
+.status.badge-success {
+    background-color: #28a745;
+}
+
+.status.badge-danger {
+    background-color: #ff6b6b;
+}
+
+.pagination .page-link {
+    color: #007bff;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+

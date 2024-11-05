@@ -1,0 +1,39 @@
+﻿@model List<Cart>
+<div class="container mt-5 text-center">
+    <div class="card p-5 shadow-lg border-0">
+        <i class="bi bi-check-circle text-success" style="font-size: 3rem;"></i>
+        <h2 class="text-success mt-3">Thank You for Your Purchase!</h2>
+        <p class="lead mt-3">
+            Your order has been placed successfully. We appreciate your trust in us and are excited to bring these movies to you!
+        </p>
+        
+        <hr />
+
+        <div class="order-summary mt-4">
+            <h4 class="text-primary">Order Summary</h4>
+            <p class="mb-1"><strong>Order ID:</strong> </p>
+            <p class="mb-1"><strong>Order Date:</strong> @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+            <p class="mb-1"><strong>Total Amount:</strong> @ViewBag.TotalPrice</p>
+        </div>
+
+        <div class="order-items mt-4">
+            <h5 class="text-secondary">Movies in Your Order</h5>
+            <ul class="list-group list-group-flush">
+                @foreach (var item in Model)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>@item.Movie.Name</span>
+                        <span class="badge bg-primary rounded-pill">Qty: @item.Count</span>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <hr class="mt-5" />
+
+        <div class="actions mt-4">
+            <a href="/" class="btn btn-outline-primary btn-lg">Continue Shopping</a>
+            <a href="/Account/Profile" class="btn btn-primary btn-lg">View Order History</a>
+        </div>
+    </div>
+</div>

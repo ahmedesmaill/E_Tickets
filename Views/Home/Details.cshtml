@@ -1,0 +1,119 @@
+﻿
+@model Movie
+
+@section Scripts {
+    <partial name="_NotificationScriptsPartial.cshtml"></partial>
+}
+
+
+@*{
+    var actors = ViewBag.Actors as ICollection<ActorMovie>;
+}*@
+<div class="movie-card" data-startdate="@Model.StartDate.ToString("yyyy-MM-dd")" data-enddate="@Model.EndDate.ToString("yyyy-MM-dd")">
+    <p class=" status btn btn-primary btn-sm float-right">@Model.MovieStatus</p>
+    <hr />
+    <h3>Details of @Model.Name</h3>
+    <hr />
+    <div class="card mb-3" style="max-width: 100%;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="~/images/movies/@Model.ImgUrl" class="img-fluid rounded" alt="...">
+            </div>
+            <div class="col-md-8 pb-3">
+                <div class="card-body">
+                    <p class="card-text">Description: @Model.Description </p>
+                    <p class="card-text">Price: <span class="badge text-bg-dark" style="background-color:gray;">@Model.Price</span></p>
+                    <p class="card-text">Cinema: @Model.Cinema.Name</p>
+                    <p class="card-text">Start Date: @Model.StartDate.ToString()</p>
+                    <p class="card-text">End Date: @Model.EndDate.ToString()</p>
+                    <p class="card-text">Category: @Model.Category.Name</p>
+                     @foreach (var item in  Model.ActorMovies )
+                     {
+                        <a href="/Actor/Index?id=@item.Actor.Id"><img src="~/images/cast/@item.Actor.ProfilePicture" style="width:45px;" /></a>
+                     } 
+                    <p><small>Trailer</small></p>
+                    <video width="300" height="180" controls autoplay>
+                        <source src="@Model.TrailerUrl" type="video/mp4">
+                    </video>
+                    <br/>
+                    <br />
+                   
+                    <form action="/Cart/AddToCart">
+                        <input type="hidden" name="movieId" value="@Model.Id" />
+                        <div class="row d-flex mb-3">
+                            <div class="col-8">
+                                <input type="number" class="form-control" name="count" placeholder="Count...">
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-success book-ticket-btn">Book Ticket</button>
+
+                               
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date();
+
+        // Loop through each movie card with "data-startdate" and "data-enddate" attributes
+        document.querySelectorAll(".movie-card").forEach(function (movieCard) {
+            const startDateStr = movieCard.getAttribute("data-startdate");
+            const endDateStr = movieCard.getAttribute("data-enddate");
+            const startDate = new Date(startDateStr);
+            const endDate = new Date(endDateStr);
+
+            let statusText = "Upcoming"; // Default status
+
+            if (today >= startDate && today <= endDate) {
+                statusText = "Available";
+            } else if (today > endDate) {
+                statusText = "Expired";
+                movieCard.classList.add("expired");
+
+                // Disable the "Book Ticket" button if the movie is expired
+                const bookButton = movieCard.querySelector(".book-ticket-btn");
+                bookButton.disabled = true;
+                bookButton.classList.add("disabled");
+
+            } else {
+                movieCard.classList.add("upcoming");
+            }
+
+            movieCard.querySelector(".status").innerText = statusText;
+        });
+    });
+</script>
+
+<style>
+    /* Optional styling for status */
+    .upcoming .status {
+        background-color: #007bff;
+    }
+    /* Upcoming - Blue */
+    .available .status {
+        background-color: #28a745;
+    }
+    /* Available - Green */
+    .expired .status {
+        opacity: 0.6;
+        background-color: red;
+    }
+
+    .disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    /* Expired - Red and faded */
+</style>
